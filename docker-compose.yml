@@ -6,18 +6,28 @@ services:
     image: 192.168.1.145:5000/mw:final
     #command:
     ports:
-      - "8080:8080"
+      - "8088:8080"
     networks:
+      - traefik_proxy
       - middleware
     deploy:
       mode: replicated
       replicas: 1
       placement:
-        constraints: [node.role == manager]
+        constraints: [node.role == worker]
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.portainer.rule=Host(`mw.secandsys.com`)"
+        - "traefik.http.routers.portainer.entrypoints=web"
+        - "traefik.http.services.portainer.loadbalancer.server.port=8088" 
+        - "traefik.http.routers.portainer-secured.rule=Host(`mw.secandsys.com`)"
+        - "traefik.http.routers.portainer-secured.entrypoints=web-secured"
+        - "traefik.http.routers.portainer-secured.tls.certresolver=mytlschallenge"
 
 networks:
+  traefik_proxy:
+    external: true
+  
   middleware:
     driver: overlay
     attachable: true
-  dbnet:
-
