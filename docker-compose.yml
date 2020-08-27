@@ -6,7 +6,7 @@ services:
     image: 192.168.1.145:5000/mw:final
     #command:
     ports:
-      - "8088:8080"
+      - "8080:8080"
     networks:
       - traefik_proxy
       - middleware
@@ -17,12 +17,12 @@ services:
         constraints: [node.role == manager]
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.portainer.rule=Host(`mw.secandsys.com`)"
-        - "traefik.http.routers.portainer.entrypoints=web"
-        - "traefik.http.services.portainer.loadbalancer.server.port=8088" 
-        - "traefik.http.routers.portainer-secured.rule=Host(`mw.secandsys.com`)"
-        - "traefik.http.routers.portainer-secured.entrypoints=web-secured"
-        - "traefik.http.routers.portainer-secured.tls.certresolver=mytlschallenge"
+        - "traefik.http.routers.mw.rule=Host(`mw.secandsys.com`)"
+        - "traefik.http.routers.mw.entrypoints=web"
+        - "traefik.http.services.mw.loadbalancer.server.port=8080" 
+        - "traefik.http.routers.mw-secured.rule=Host(`mw.secandsys.com`)"
+        - "traefik.http.routers.mw-secured.entrypoints=web-secured"
+        - "traefik.http.routers.mw-secured.tls.certresolver=mytlschallenge"
 
 networks:
   traefik_proxy:
