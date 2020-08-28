@@ -9,7 +9,7 @@ services:
       - "8080:8080"
     networks:
       - traefik_proxy
-      - middleware
+      - postgres_default
     deploy:
       mode: replicated
       replicas: 1
@@ -28,6 +28,5 @@ networks:
   traefik_proxy:
     external: true
   
-  middleware:
-    driver: overlay
-    attachable: true
+  postgres_default:
+    external: true
