@@ -12,9 +12,9 @@ services:
       - postgres_default
     deploy:
       mode: replicated
-      replicas: 1
-      placement:
-        constraints: [node.role == manager]
+      replicas: 2
+      #placement:
+      #  constraints: [node.role == manager]
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.mw.rule=Host(`mw.secandsys.com`)"
